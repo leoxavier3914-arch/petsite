@@ -60,6 +60,7 @@ img{max-width:100%;display:block;border-radius:14px}
 .menu-btn span{width:26px;height:2px;background:var(--white);display:block;border-radius:2px}
 
 .mobile-menu{display:none;flex-direction:column;padding:10px 20px;gap:10px;border-bottom:1px solid var(--stroke);background:rgba(10,20,15,.9)}
+.mobile-menu[hidden]{display:none !important}
 .mobile-menu a{color:var(--white);text-decoration:none;padding:10px;border-radius:10px}
 .mobile-menu .btn{width:100%}
 
