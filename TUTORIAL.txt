@@ -34,6 +34,7 @@ PASSO 1 — EDITAR CONFIG.JS
 7. (Opcional) seo → título da aba, descrição e imagem para redes sociais (ogImage 1200×630).
 
 PASSO 2 — TROCAR LOGO E FOTOS (OPCIONAL)
+- Já existem placeholders leves nesses caminhos. Só substituir pelos seus arquivos finais.
 - Logo: coloque seu arquivo em assets/images/logo.png. Pronto.
 - Capa (hero): se quiser, coloque assets/images/hero.jpg (1920×1280). A página detecta e troca sozinha.
 - Galeria: coloque suas fotos em assets/images/gallery/gallery-1.jpg … gallery-8.jpg (quanto mais melhor).
