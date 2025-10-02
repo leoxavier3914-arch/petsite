@@ -17,16 +17,21 @@ TAMANHOS RECOMENDADOS
 
 PASSO 1 — EDITAR CONFIG.JS
 1. Abra o arquivo config.js (pode ser no Bloco de Notas mesmo).
-2. Troque:
-   - siteName → seu nome/loja
-   - tagline e description → seu “slogan” e descrição curta
+2. No topo altere os dados gerais:
+   - siteName e brand.primary/secondary → como o nome aparece no cabeçalho e rodapé
    - whatsappNumber → coloque só números (DDI + DDD + número), ex.: 5511999999999
-   - addressHtml → seu endereço (pode usar quebra de linha <br/>)
-   - openingHours → ajuste os horários
-   - social.instagram / social.tiktok → seus links (se quiser)
-   - form.provider → escolha UMA opção: "whatsapp" (mais fácil), "netlify", "formspree", "emailjs"
-3. (Opcional) pixels → GA4, Facebook e TikTok (cole seus códigos para medir visitas).
-4. (Opcional) seo.ogImage → link absoluto de uma imagem 1200×630 para aparecer bonita ao compartilhar.
+   - addressHtml → endereço (aceita <br/> para quebrar linha)
+   - openingHours → dias e horários da sua operação
+3. Logo abaixo edite cada bloco de conteúdo:
+   - navigation → textos e links do menu/CTA
+   - hero → título, destaque, botões, badges e formulário da oferta
+   - services, plans, testimonials, gallery, faq → títulos e listas dos cards
+   - contact → opções do formulário, botões e badges
+   - footer → texto legal e links do rodapé
+4. Redes sociais: preencha social.instagram / social.tiktok se quiser mostrar.
+5. Formulário: form.provider define como você recebe ("whatsapp", "netlify", "formspree" ou "emailjs").
+6. (Opcional) pixels → GA4, Facebook e TikTok (cole seus códigos para medir visitas).
+7. (Opcional) seo → título da aba, descrição e imagem para redes sociais (ogImage 1200×630).
 
 PASSO 2 — TROCAR LOGO E FOTOS (OPCIONAL)
 - Logo: coloque seu arquivo em assets/images/logo.png. Pronto.
