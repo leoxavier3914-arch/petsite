@@ -5,6 +5,14 @@
 - `siteName` e o objeto `brand` (nome que aparece no cabeçalho/rodapé)
 - `whatsappNumber`, `addressHtml` e `openingHours`
 - Blocos `navigation`, `hero`, `services`, `plans`, `testimonials`, `gallery`, `faq`, `contact` e `footer` para trocar textos, botões e listas
+- Para **esconder seções sem editar HTML**, coloque `enabled: false` nos blocos:
+  - `hero.promo.enabled`
+  - `services.enabled`
+  - `plans.enabled`
+  - `testimonials.enabled`
+  - `gallery.enabled`
+  - `faq.enabled`
+  - `contact.enabled`
 - `form.provider` → `"whatsapp"` (recomendado), `"netlify"`, `"formspree"`, `"emailjs"`
 - `pixels` (GA4, Facebook, TikTok) e `seo` (título, descrição, favicon emoji, imagem de compartilhamento)
 

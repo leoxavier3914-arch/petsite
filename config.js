@@ -49,6 +49,7 @@ window.SITE_CONFIG = {
     primaryCTA: { label: "Agendar agora", href: "#contato" },
     secondaryCTA: { label: "Ver serviços", href: "#servicos" },
     promo: {
+      enabled: true,
       title: "Promo de estreia",
       description: "Banho & tosa com {highlight} na primeira visita.",
       highlight: "15% OFF",
@@ -64,6 +65,7 @@ window.SITE_CONFIG = {
   },
 
   services: {
+    enabled: true,
     title: "Nossos serviços",
     subtitle: "Do banho ao check-up, tudo para o bem-estar do seu melhor amigo.",
     items: [
@@ -111,6 +113,7 @@ window.SITE_CONFIG = {
   },
 
   plans: {
+    enabled: true,
     title: "Planos e pacotes",
     subtitle: "Economize com pacotes mensais e vantagens exclusivas.",
     items: [
@@ -159,6 +162,7 @@ window.SITE_CONFIG = {
   },
 
   testimonials: {
+    enabled: true,
     title: "Quem confia, recomenda",
     items: [
       { quote: "Meu cãozinho nunca voltou tão cheiroso. Atendimento impecável!", author: "— Júlia M." },
@@ -168,11 +172,13 @@ window.SITE_CONFIG = {
   },
 
   gallery: {
+    enabled: true,
     title: "Nossos momentos",
     subtitle: "Alguns registros de quem passa por aqui."
   },
 
   faq: {
+    enabled: true,
     title: "Perguntas frequentes",
     items: [
       {
@@ -195,6 +201,7 @@ window.SITE_CONFIG = {
   },
 
   contact: {
+    enabled: true,
     title: "Agende seu atendimento",
     subtitle: "Preencha os dados ou chame no WhatsApp. Respondemos rápido!",
     serviceOptions: [

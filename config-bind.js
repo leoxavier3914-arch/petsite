@@ -147,44 +147,49 @@
     const promo = hero.promo || {};
     const card = document.querySelector('.hero-card');
     if (card){
-      const titleEl = card.querySelector('.card-title');
-      if (titleEl && promo.title != null) titleEl.textContent = promo.title;
-      const descEl = card.querySelector('p');
-      if (descEl && promo.description){
-        let html = promo.description;
-        if (promo.highlight){
-          if (html.includes('{highlight}')){
-            html = html.replace(/\{highlight\}/g, `<strong>${promo.highlight}</strong>`);
-          } else {
-            html = `${html} <strong>${promo.highlight}</strong>`;
+      if (promo.enabled === false){
+        card.hidden = true;
+      } else {
+        card.hidden = false;
+        const titleEl = card.querySelector('.card-title');
+        if (titleEl && promo.title != null) titleEl.textContent = promo.title;
+        const descEl = card.querySelector('p');
+        if (descEl && promo.description){
+          let html = promo.description;
+          if (promo.highlight){
+            if (html.includes('{highlight}')){
+              html = html.replace(/\{highlight\}/g, `<strong>${promo.highlight}</strong>`);
+            } else {
+              html = `${html} <strong>${promo.highlight}</strong>`;
+            }
           }
+          descEl.innerHTML = html;
         }
-        descEl.innerHTML = html;
-      }
-      const leadForm = card.querySelector('form');
-      if (leadForm && promo.leadForm){
-        const spans = leadForm.querySelectorAll('label span');
-        if (spans[0] && promo.leadForm.nameLabel != null) spans[0].textContent = promo.leadForm.nameLabel;
-        if (spans[1] && promo.leadForm.whatsappLabel != null) spans[1].textContent = promo.leadForm.whatsappLabel;
-        const inputs = leadForm.querySelectorAll('input');
-        if (inputs[0]){
-          if (promo.leadForm.namePlaceholder != null){
-            inputs[0].placeholder = promo.leadForm.namePlaceholder;
-          } else if (promo.leadForm.nameLabel != null && inputs[0].placeholder.toLowerCase().startsWith('ex.:')){
-            inputs[0].placeholder = `Ex.: ${promo.leadForm.nameLabel}`;
+        const leadForm = card.querySelector('form');
+        if (leadForm && promo.leadForm){
+          const spans = leadForm.querySelectorAll('label span');
+          if (spans[0] && promo.leadForm.nameLabel != null) spans[0].textContent = promo.leadForm.nameLabel;
+          if (spans[1] && promo.leadForm.whatsappLabel != null) spans[1].textContent = promo.leadForm.whatsappLabel;
+          const inputs = leadForm.querySelectorAll('input');
+          if (inputs[0]){
+            if (promo.leadForm.namePlaceholder != null){
+              inputs[0].placeholder = promo.leadForm.namePlaceholder;
+            } else if (promo.leadForm.nameLabel != null && inputs[0].placeholder.toLowerCase().startsWith('ex.:')){
+              inputs[0].placeholder = `Ex.: ${promo.leadForm.nameLabel}`;
+            }
           }
-        }
-        if (inputs[1]){
-          if (promo.leadForm.whatsappPlaceholder != null){
-            inputs[1].placeholder = promo.leadForm.whatsappPlaceholder;
-          } else if (promo.leadForm.whatsappLabel != null && inputs[1].placeholder.includes('9')){
-            inputs[1].placeholder = `(11) 99999-9999`;
+          if (inputs[1]){
+            if (promo.leadForm.whatsappPlaceholder != null){
+              inputs[1].placeholder = promo.leadForm.whatsappPlaceholder;
+            } else if (promo.leadForm.whatsappLabel != null && inputs[1].placeholder.includes('9')){
+              inputs[1].placeholder = `(11) 99999-9999`;
+            }
           }
+          const button = leadForm.querySelector('button');
+          if (button && promo.leadForm.buttonLabel != null) button.textContent = promo.leadForm.buttonLabel;
+          const disclaimer = leadForm.querySelector('small');
+          if (disclaimer && promo.disclaimer != null) disclaimer.textContent = promo.disclaimer;
         }
-        const button = leadForm.querySelector('button');
-        if (button && promo.leadForm.buttonLabel != null) button.textContent = promo.leadForm.buttonLabel;
-        const disclaimer = leadForm.querySelector('small');
-        if (disclaimer && promo.disclaimer != null) disclaimer.textContent = promo.disclaimer;
       }
     }
   };
@@ -193,12 +198,21 @@
 
   const bindServices = () => {
     const services = C.services || {};
+    const section = document.querySelector('#servicos');
+    const items = Array.isArray(services.items) ? services.items : [];
+    if (section){
+      if (services.enabled === false || !items.length){
+        section.hidden = true;
+        return;
+      }
+      section.hidden = false;
+    }
     if (services.title != null) setText('#servicos .section-header h2', services.title);
     if (services.subtitle != null) setText('#servicos .section-header p', services.subtitle);
     const grid = document.querySelector('#servicos .grid.cards');
-    if (grid && Array.isArray(services.items)){
+    if (grid){
       grid.innerHTML = '';
-      services.items.forEach(item => {
+      items.forEach(item => {
         const article = document.createElement('article');
         article.className = 'card glass';
         const icon = document.createElement('div'); icon.className = 'icon'; icon.innerHTML = iconMarkup(item.icon);
@@ -221,12 +235,21 @@
 
   const bindPlans = () => {
     const plans = C.plans || {};
+    const section = document.querySelector('#planos');
+    const items = Array.isArray(plans.items) ? plans.items : [];
+    if (section){
+      if (plans.enabled === false || !items.length){
+        section.hidden = true;
+        return;
+      }
+      section.hidden = false;
+    }
     if (plans.title != null) setText('#planos .section-header h2', plans.title);
     if (plans.subtitle != null) setText('#planos .section-header p', plans.subtitle);
     const grid = document.querySelector('#planos .grid.plans');
-    if (grid && Array.isArray(plans.items)){
+    if (grid){
       grid.innerHTML = '';
-      plans.items.forEach(plan => {
+      items.forEach(plan => {
         const article = document.createElement('article');
         article.className = 'plan glass';
         if (plan.highlight) article.classList.add('highlight');
@@ -262,11 +285,20 @@
 
   const bindTestimonials = () => {
     const testimonials = C.testimonials || {};
+    const section = document.querySelector('#depoimentos');
+    const items = Array.isArray(testimonials.items) ? testimonials.items : [];
+    if (section){
+      if (testimonials.enabled === false || !items.length){
+        section.hidden = true;
+        return;
+      }
+      section.hidden = false;
+    }
     if (testimonials.title != null) setText('#depoimentos .section-header h2', testimonials.title);
     const grid = document.querySelector('#depoimentos .grid.testimonials');
-    if (grid && Array.isArray(testimonials.items)){
+    if (grid){
       grid.innerHTML = '';
-      testimonials.items.forEach(item => {
+      items.forEach(item => {
         const figure = document.createElement('figure'); figure.className = 't-card glass';
         const block = document.createElement('blockquote'); block.textContent = item.quote || '';
         const caption = document.createElement('figcaption'); caption.textContent = item.author || '';
@@ -279,35 +311,57 @@
 
   const bindGallery = () => {
     const gallery = C.gallery || {};
-    const section = document.querySelector('#galeria .section-header');
+    const section = document.querySelector('#galeria');
     if (!section) return;
-    const h2 = section.querySelector('h2'); if (h2 && gallery.title != null) h2.textContent = gallery.title;
-    const p = section.querySelector('p'); if (p && gallery.subtitle != null) p.textContent = gallery.subtitle;
+    if (gallery.enabled === false){
+      section.hidden = true;
+      return;
+    }
+    section.hidden = false;
+    const header = section.querySelector('.section-header');
+    if (!header) return;
+    const h2 = header.querySelector('h2'); if (h2 && gallery.title != null) h2.textContent = gallery.title;
+    const p = header.querySelector('p'); if (p && gallery.subtitle != null) p.textContent = gallery.subtitle;
   };
 
   const bindFaq = () => {
     const faq = C.faq || {};
     const faqContainer = document.querySelector('.faq');
     if (!faqContainer) return;
+    const section = faqContainer.closest('section');
+    const items = Array.isArray(faq.items) ? faq.items : [];
+    if (section){
+      if (faq.enabled === false || !items.length){
+        section.hidden = true;
+        return;
+      }
+      section.hidden = false;
+    }
     const header = faqContainer.previousElementSibling;
     if (header && faq.title != null){
       const h2 = header.querySelector('h2'); if (h2) h2.textContent = faq.title;
     }
-    if (Array.isArray(faq.items)){
-      faqContainer.innerHTML = '';
-      faq.items.forEach(item => {
+    faqContainer.innerHTML = '';
+    items.forEach(item => {
         const details = document.createElement('details');
         const summary = document.createElement('summary'); summary.textContent = item.question || '';
         const p = document.createElement('p'); p.textContent = item.answer || '';
         details.appendChild(summary);
         details.appendChild(p);
         faqContainer.appendChild(details);
-      });
-    }
+    });
   };
 
   const bindContact = () => {
     const contact = C.contact || {};
+    const section = document.querySelector('#contato');
+    if (section){
+      if (contact.enabled === false){
+        section.hidden = true;
+        return;
+      }
+      section.hidden = false;
+    }
     if (contact.title != null) setText('#contato .section-header h2', contact.title);
     if (contact.subtitle != null) setText('#contato .section-header p', contact.subtitle);
 

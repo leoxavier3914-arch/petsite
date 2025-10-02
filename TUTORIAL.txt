@@ -28,6 +28,7 @@ PASSO 1 — EDITAR CONFIG.JS
    - services, plans, testimonials, gallery, faq → títulos e listas dos cards
    - contact → opções do formulário, botões e badges
    - footer → texto legal e links do rodapé
+   - **Quer remover uma seção inteira?** Basta colocar `enabled: false` nos blocos `hero.promo`, `services`, `plans`, `testimonials`, `gallery`, `faq` ou `contact` e ela some automaticamente do site.
 4. Redes sociais: preencha social.instagram / social.tiktok se quiser mostrar.
 5. Formulário: form.provider define como você recebe ("whatsapp", "netlify", "formspree" ou "emailjs").
 6. (Opcional) pixels → GA4, Facebook e TikTok (cole seus códigos para medir visitas).
