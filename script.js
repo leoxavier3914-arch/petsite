@@ -96,6 +96,14 @@ if (contactForm){
     // Netlify Forms: add attributes and allow normal submit
     contactForm.setAttribute('data-netlify','true');
     contactForm.setAttribute('name','agendamento');
+    contactForm.method = 'POST';
+    contactForm.action = 'thanks.html';
+    contactForm.setAttribute('netlify-honeypot', 'bot-field');
+    const formNameInput = document.createElement('input');
+    formNameInput.type = 'hidden';
+    formNameInput.name = 'form-name';
+    formNameInput.value = 'agendamento';
+    contactForm.appendChild(formNameInput);
     // honeypot
     const hp = document.createElement('input'); hp.type='text'; hp.name='bot-field'; hp.style.display='none'; contactForm.appendChild(hp);
   } else if (provider === 'formspree') {
