@@ -82,8 +82,14 @@ if (contactForm){
         hora: fd.get('hora') || 'a combinar',
         obs: (fd.get('obs') || '').trim()
       };
-      const msg = `Olá! Quero agendar:%0A• Nome: ${data.nome}%0A• WhatsApp: ${data.whats}%0A• Pet: ${data.pet}%0A• Serviço: ${data.servico}%0A• Data/Hora: ${data.data} ${data.hora}%0A• Obs: ${data.obs || '—'}`;
-      const url = `https://wa.me/${BUSINESS_WHATSAPP}?text=${msg}`;
+      const msg = `Olá! Quero agendar:
+• Nome: ${data.nome}
+• WhatsApp: ${data.whats}
+• Pet: ${data.pet}
+• Serviço: ${data.servico}
+• Data/Hora: ${data.data} ${data.hora}
+• Obs: ${data.obs || '—'}`;
+      const url = `https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
     });
   } else if (provider === 'netlify') {
