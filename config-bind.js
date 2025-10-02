@@ -79,7 +79,10 @@
     const desktopLinks = Array.from(document.querySelectorAll('.nav-links a')).filter(a => !a.classList.contains('btn-sm'));
     desktopLinks.forEach((linkEl, index) => {
       const data = links[index];
-      if (!data) return;
+      if (!data){
+        linkEl.remove();
+        return;
+      }
       if (data.label != null) linkEl.textContent = data.label;
       if (data.href) linkEl.setAttribute('href', data.href);
     });
@@ -91,7 +94,10 @@
     const mobileLinks = Array.from(document.querySelectorAll('#mobileMenu a')).filter(a => !a.classList.contains('btn'));
     mobileLinks.forEach((linkEl, index) => {
       const data = links[index];
-      if (!data) return;
+      if (!data){
+        linkEl.remove();
+        return;
+      }
       if (data.label != null) linkEl.textContent = data.label;
       if (data.href) linkEl.setAttribute('href', data.href);
     });
@@ -104,7 +110,10 @@
     const footerEls = document.querySelectorAll('.footer-links a');
     footerEls.forEach((el, index) => {
       const data = footerLinks[index] || links[index];
-      if (!data) return;
+      if (!data){
+        el.remove();
+        return;
+      }
       if (data.label != null) el.textContent = data.label;
       if (data.href) el.setAttribute('href', data.href);
     });

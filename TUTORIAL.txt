@@ -23,7 +23,7 @@ PASSO 1 — EDITAR CONFIG.JS
    - addressHtml → endereço (aceita <br/> para quebrar linha)
    - openingHours → dias e horários da sua operação
 3. Logo abaixo edite cada bloco de conteúdo:
-   - navigation → textos e links do menu/CTA
+   - navigation → textos e links do menu/CTA (apague um item da lista para remover o link do site)
    - hero → título, destaque, botões, badges e formulário da oferta
    - services, plans, testimonials, gallery, faq → títulos e listas dos cards
    - contact → opções do formulário, botões e badges
