@@ -1,12 +1,12 @@
 
 # Configuração rápida (plug-and-play)
 
-1) **Abra `config.js`** e edite:
-- `siteName`, `tagline`, `description`
-- `whatsappNumber` (formato DDI+DDD+número, só dígitos, ex.: `5511999999999`)
-- `addressHtml` e `openingHours`
+1) **Abra `config.js`** e personalize:
+- `siteName` e o objeto `brand` (nome que aparece no cabeçalho/rodapé)
+- `whatsappNumber`, `addressHtml` e `openingHours`
+- Blocos `navigation`, `hero`, `services`, `plans`, `testimonials`, `gallery`, `faq`, `contact` e `footer` para trocar textos, botões e listas
 - `form.provider` → `"whatsapp"` (recomendado), `"netlify"`, `"formspree"`, `"emailjs"`
-- `pixels` (GA4, Facebook, TikTok), `seo.ogImage` e `seo.faviconEmoji` (opcional)
+- `pixels` (GA4, Facebook, TikTok) e `seo` (título, descrição, favicon emoji, imagem de compartilhamento)
 
 2) **Troque as fotos (opcional)**: 
 Coloque arquivos na pasta `assets/images/` que eles substituem as imagens padrão automaticamente:
