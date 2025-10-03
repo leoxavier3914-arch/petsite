@@ -40,6 +40,11 @@
     test.onload = function(){
       var brand = document.querySelector('.brand');
       if (!brand) return;
+      // remove placeholder (.brand-logo) if it's not an <img>
+      var placeholder = brand.querySelector('.brand-logo');
+      if (placeholder && placeholder.tagName !== 'IMG'){
+        placeholder.remove();
+      }
       // cria <img class="brand-logo">
       var img = document.createElement('img');
       img.src = logoPath;
