@@ -90,32 +90,49 @@ $('#leadForm')?.addEventListener('submit', (e)=>{
 const provider = (window.SITE_CONFIG && window.SITE_CONFIG.form && window.SITE_CONFIG.form.provider || 'whatsapp').toLowerCase();
 
 const contactForm = $('#contactForm');
-if (contactForm){
-  if (provider === 'whatsapp' || provider === 'disabled'){
-    contactForm.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const fd = new FormData(e.currentTarget);
-      const data = {
-        nome: fd.get('nome'),
-        whats: fd.get('whats'),
-        pet: fd.get('pet'),
-        servico: fd.get('servico'),
-        data: fd.get('data') || 'a combinar',
-        hora: fd.get('hora') || 'a combinar',
-        obs: (fd.get('obs') || '').trim()
-      };
-      const msg = `Olá! Quero agendar:
+const whatsappSubmitHandler = (e)=>{
+  e.preventDefault();
+  const fd = new FormData(e.currentTarget);
+  const data = {
+    nome: fd.get('nome'),
+    whats: fd.get('whats'),
+    pet: fd.get('pet'),
+    servico: fd.get('servico'),
+    data: fd.get('data') || 'a combinar',
+    hora: fd.get('hora') || 'a combinar',
+    obs: (fd.get('obs') || '').trim()
+  };
+  const msg = `Olá! Quero agendar:
 • Nome: ${data.nome}
 • WhatsApp: ${data.whats}
 • Pet: ${data.pet}
 • Serviço: ${data.servico}
 • Data/Hora: ${data.data} ${data.hora}
 • Obs: ${data.obs || '—'}`;
-      const businessNumber = ensureWhatsappNumber();
-      if (!businessNumber) return;
-      const url = `https://wa.me/${businessNumber}?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
-    });
+  const businessNumber = ensureWhatsappNumber();
+  if (!businessNumber) return;
+  const url = `https://wa.me/${businessNumber}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+};
+
+if (contactForm){
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  if (provider === 'whatsapp'){
+    submitButton && (submitButton.disabled = false);
+    contactForm.addEventListener('submit', whatsappSubmitHandler);
+  } else if (provider === 'disabled') {
+    contactForm.removeEventListener('submit', whatsappSubmitHandler);
+    if (submitButton){
+      submitButton.disabled = true;
+      submitButton.setAttribute('aria-disabled', 'true');
+    }
+    if (!contactForm.querySelector('[data-form-disabled-message]')){
+      const info = document.createElement('p');
+      info.dataset.formDisabledMessage = 'true';
+      info.textContent = 'Formulário temporariamente indisponível.';
+      info.className = 'form-disabled-message';
+      contactForm.appendChild(info);
+    }
   } else if (provider === 'netlify') {
     // Netlify Forms: add attributes and allow normal submit
     contactForm.setAttribute('data-netlify','true');
