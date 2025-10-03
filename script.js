@@ -65,12 +65,126 @@ const getValidWhatsappNumber = () => {
 };
 window.getValidWhatsappNumber = getValidWhatsappNumber;
 
+const provider = (window.SITE_CONFIG && window.SITE_CONFIG.form && window.SITE_CONFIG.form.provider || 'whatsapp').toLowerCase();
+
+const whatsappConfigErrorManager = (() => {
+  const MESSAGE = 'Por favor, informe um número de WhatsApp válido nas configurações (inclua DDI e DDD, apenas dígitos).';
+  const alerts = new Set();
+  const disabledButtons = new Set();
+
+  const ensureAlertForForm = (form) => {
+    if (!form) return null;
+    let alert = form.querySelector('[data-whatsapp-config-alert]');
+    if (!alert){
+      alert = document.createElement('p');
+      alert.dataset.whatsappConfigAlert = 'true';
+      alert.setAttribute('role', 'alert');
+      alert.className = 'form-alert';
+      alert.textContent = MESSAGE;
+      const actions = form.querySelector('.actions');
+      if (actions){
+        const firstAction = actions.querySelector('button, a');
+        if (firstAction){
+          actions.insertBefore(alert, firstAction);
+        } else {
+          actions.appendChild(alert);
+        }
+      } else {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn){
+          submitBtn.insertAdjacentElement('afterend', alert);
+        } else {
+          form.appendChild(alert);
+        }
+      }
+    }
+    alerts.add(alert);
+    return alert;
+  };
+
+  const disableButton = (button) => {
+    if (!button) return;
+    if (button.dataset.whatsappConfigGuard === 'locked'){
+      disabledButtons.add(button);
+      return;
+    }
+    const wasDisabled = button.disabled;
+    const hadAriaDisabled = button.hasAttribute('aria-disabled');
+    button.dataset.whatsappConfigGuard = 'locked';
+    button.dataset.whatsappConfigWasDisabled = wasDisabled ? 'true' : 'false';
+    if (!wasDisabled){
+      button.disabled = true;
+      if (!hadAriaDisabled){
+        button.setAttribute('aria-disabled', 'true');
+        button.dataset.whatsappConfigSetAria = 'true';
+      }
+    }
+    disabledButtons.add(button);
+  };
+
+  const restoreButton = (button) => {
+    if (!button || button.dataset.whatsappConfigGuard !== 'locked') return;
+    const wasDisabled = button.dataset.whatsappConfigWasDisabled === 'true';
+    const setAria = button.dataset.whatsappConfigSetAria === 'true';
+    if (!wasDisabled){
+      button.disabled = false;
+    }
+    if (setAria){
+      button.removeAttribute('aria-disabled');
+    }
+    delete button.dataset.whatsappConfigGuard;
+    delete button.dataset.whatsappConfigWasDisabled;
+    delete button.dataset.whatsappConfigSetAria;
+    disabledButtons.delete(button);
+  };
+
+  const targetForms = () => {
+    const forms = [];
+    const lead = $('#leadForm');
+    if (lead) forms.push(lead);
+    if (provider === 'whatsapp'){
+      const contact = $('#contactForm');
+      if (contact) forms.push(contact);
+    }
+    return forms;
+  };
+
+  const show = () => {
+    targetForms().forEach(form => {
+      ensureAlertForForm(form);
+      disableButton(form.querySelector('button[type="submit"]'));
+    });
+  };
+
+  const clear = () => {
+    alerts.forEach(alert => {
+      if (alert && alert.parentNode){
+        alert.parentNode.removeChild(alert);
+      }
+    });
+    alerts.clear();
+    Array.from(disabledButtons).forEach(restoreButton);
+    disabledButtons.clear();
+  };
+
+  return { show, clear };
+})();
+
+const showWhatsappConfigError = () => {
+  whatsappConfigErrorManager.show();
+};
+
+const clearWhatsappConfigError = () => {
+  whatsappConfigErrorManager.clear();
+};
+
 const ensureWhatsappNumber = () => {
   const digits = getValidWhatsappNumber();
   if (!digits){
-    alert('Por favor, informe um número de WhatsApp válido nas configurações (inclua DDI e DDD, apenas dígitos).');
+    showWhatsappConfigError();
     return null;
   }
+  clearWhatsappConfigError();
   return digits;
 };
 
@@ -87,8 +201,6 @@ $('#leadForm')?.addEventListener('submit', (e)=>{
 })
 
 /* Contact form -> WhatsApp por padrão; respeita provider do config */
-const provider = (window.SITE_CONFIG && window.SITE_CONFIG.form && window.SITE_CONFIG.form.provider || 'whatsapp').toLowerCase();
-
 const contactForm = $('#contactForm');
 const whatsappSubmitHandler = (e)=>{
   e.preventDefault();
