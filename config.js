@@ -235,6 +235,12 @@ window.SITE_CONFIG = {
     formspreeEndpoint: "", // ex: https://formspree.io/f/xxxxxxx
     emailjs: { publicKey: "", serviceId: "", templateId: "" }
   },
+  thankYouPage: {
+    title: "Obrigado! 🎉",
+    message: "Recebemos sua mensagem. Em breve entraremos em contato.",
+    backButtonLabel: "Voltar",
+    backButtonHref: "/"
+  },
   pixels: {
     ga4: "",        // G-XXXXXXXXXX
     facebook: "",   // 1234567890

@@ -27,6 +27,7 @@ PASSO 1 — EDITAR CONFIG.JS
    - hero → título, destaque, botões, badges e formulário da oferta
    - services, plans, testimonials, gallery, faq → títulos e listas dos cards
    - contact → opções do formulário, botões e badges
+   - thankYouPage → título, mensagem e botão da página de confirmação (thanks.html)
    - footer → texto legal e links do rodapé
    - **Quer remover uma seção inteira?** Basta colocar `enabled: false` nos blocos `hero.promo`, `services`, `plans`, `testimonials`, `gallery`, `faq` ou `contact` e ela some automaticamente do site.
 4. Redes sociais: preencha social.instagram / social.tiktok se quiser mostrar.
@@ -44,6 +45,7 @@ PASSO 2 — TROCAR LOGO E FOTOS (OPCIONAL)
 PASSO 3 — ESCOLHER COMO RECEBER CONTATOS (form.provider no config.js)
 - "whatsapp" (RECOMENDADO): ao enviar, o cliente abre conversa no seu WhatsApp com a mensagem pronta.
 - "netlify": publique no Netlify (https://app.netlify.com). O formulário aparece no painel do Netlify. A página de sucesso é thanks.html.
+  Personalize `thankYouPage` no `config.js` para mostrar sua mensagem e link de retorno.
 - "formspree": crie um formulário grátis em https://formspree.io e copie o “endpoint” para config.js.
 - "emailjs": exige conta no EmailJS e chave pública. Mostramos um aviso até você plugar o SDK.
 

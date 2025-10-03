@@ -5,6 +5,7 @@
 - `siteName` e o objeto `brand` (nome que aparece no cabeçalho/rodapé)
 - `whatsappNumber`, `addressHtml` e `openingHours`
 - Blocos `navigation`, `hero`, `services`, `plans`, `testimonials`, `gallery`, `faq`, `contact` e `footer` para trocar textos, botões e listas
+- `thankYouPage` → título, texto e botão da página thanks.html (Netlify usa essa tela após cada envio)
 - Para **esconder seções sem editar HTML**, coloque `enabled: false` nos blocos:
   - `hero.promo.enabled`
   - `services.enabled`
@@ -26,5 +27,7 @@ assets/images/gallery/gallery-8.jpg  (1200x1200)
 ```
 
 3) **Publicar**: Netlify (arrastar pasta), Vercel, GitHub Pages ou Cloudflare Pages.
+
+> **Dica:** Ao usar o Netlify com o formulário nativo, personalize `thankYouPage` no `config.js`. Essa tela (`thanks.html`) é aberta automaticamente depois de cada envio.
 
 > **Observação:** O design original foi mantido. Este pacote só adiciona configuração por arquivo e troca simples de imagens.
