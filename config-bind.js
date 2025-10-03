@@ -120,48 +120,58 @@
 
   const bindNavigation = () => {
     const navigation = C.navigation || {};
-    const links = navigation.links || [];
-    const desktopLinks = Array.from(document.querySelectorAll('.nav-links a')).filter(a => !a.classList.contains('btn-sm'));
-    desktopLinks.forEach((linkEl, index) => {
-      const data = links[index];
-      if (!data){
-        linkEl.remove();
-        return;
-      }
-      if (data.label != null) linkEl.textContent = data.label;
-      if (data.href) linkEl.setAttribute('href', data.href);
-    });
-    const navCta = document.querySelector('.nav-links a.btn-sm');
-    if (navCta && navigation.cta){
-      if (navigation.cta.label != null) navCta.textContent = navigation.cta.label;
-      if (navigation.cta.href) navCta.setAttribute('href', navigation.cta.href);
-    }
-    const mobileLinks = Array.from(document.querySelectorAll('#mobileMenu a')).filter(a => !a.classList.contains('btn'));
-    mobileLinks.forEach((linkEl, index) => {
-      const data = links[index];
-      if (!data){
-        linkEl.remove();
-        return;
-      }
-      if (data.label != null) linkEl.textContent = data.label;
-      if (data.href) linkEl.setAttribute('href', data.href);
-    });
-    const mobileCta = document.querySelector('#mobileMenu a.btn');
-    if (mobileCta && navigation.cta){
-      if (navigation.cta.label != null) mobileCta.textContent = navigation.cta.label;
-      if (navigation.cta.href) mobileCta.setAttribute('href', navigation.cta.href);
-    }
-    const footerLinks = C.footer && C.footer.links || [];
-    const footerEls = document.querySelectorAll('.footer-links a');
-    footerEls.forEach((el, index) => {
-      const data = footerLinks[index] || links[index];
-      if (!data){
-        el.remove();
-        return;
-      }
-      if (data.label != null) el.textContent = data.label;
+    const links = Array.isArray(navigation.links) ? navigation.links.filter(Boolean) : [];
+
+    const toClassList = (value) => {
+      if (!value) return [];
+      if (Array.isArray(value)) return value.filter(Boolean);
+      if (typeof value === 'string') return value.split(/\s+/).filter(Boolean);
+      return [];
+    };
+
+    const createLinkElement = (data, classNames) => {
+      if (!data || typeof data !== 'object') return null;
+      const el = document.createElement('a');
+      const classes = [
+        ...toClassList(classNames),
+        ...toClassList(data.className),
+        ...toClassList(data.classes)
+      ];
+      if (classes.length) el.className = Array.from(new Set(classes)).join(' ');
       if (data.href) el.setAttribute('href', data.href);
-    });
+      if (data.target) el.setAttribute('target', data.target);
+      if (data.rel) el.setAttribute('rel', data.rel);
+      if (data.title) el.setAttribute('title', data.title);
+      if (data.ariaLabel) el.setAttribute('aria-label', data.ariaLabel);
+      if (data.label != null) el.textContent = data.label;
+      return el;
+    };
+
+    const rebuildContainer = (selector, classNames, items = links) => {
+      const container = document.querySelector(selector);
+      if (!container) return null;
+      container.innerHTML = '';
+      items.forEach((link) => {
+        const el = createLinkElement(link, classNames);
+        if (el) container.appendChild(el);
+      });
+      return container;
+    };
+
+    const desktopContainer = rebuildContainer('.nav-links');
+    if (desktopContainer && navigation.cta){
+      const ctaEl = createLinkElement(navigation.cta, ['btn', 'btn-sm']);
+      if (ctaEl) desktopContainer.appendChild(ctaEl);
+    }
+
+    const mobileContainer = rebuildContainer('#mobileMenu');
+    if (mobileContainer && navigation.cta){
+      const ctaEl = createLinkElement(navigation.cta, ['btn']);
+      if (ctaEl) mobileContainer.appendChild(ctaEl);
+    }
+
+    const footerConfig = (C.footer && Array.isArray(C.footer.links)) ? C.footer.links.filter(Boolean) : null;
+    rebuildContainer('.footer-links', null, footerConfig && footerConfig.length ? footerConfig : links);
   };
 
   const bindHero = () => {

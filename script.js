@@ -16,15 +16,24 @@ $('#year').textContent = new Date().getFullYear()
 const menuBtn = $('#menuBtn')
 const mobile = $('#mobileMenu')
 if (menuBtn){
-  menuBtn.addEventListener('click', () => {
+  const toggleMobile = () => {
+    if (!mobile) return
     const open = menuBtn.getAttribute('aria-expanded') === 'true'
     menuBtn.setAttribute('aria-expanded', String(!open))
     mobile.hidden = open
-  })
-  $$('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>{
+  }
+  const closeMobile = () => {
+    if (!mobile) return
     mobile.hidden = true
     menuBtn.setAttribute('aria-expanded','false')
-  }))
+  }
+  menuBtn.addEventListener('click', toggleMobile)
+  mobile?.addEventListener('click', (event) => {
+    const link = event.target.closest('a')
+    if (link && mobile.contains(link)){
+      closeMobile()
+    }
+  })
 }
 
 /* Smooth scroll */

@@ -7,6 +7,7 @@
   - Use hexadecimais (`#RRGGBB` ou `#RRGGBBAA` para transparências) e mantenha contraste mínimo de 4.5:1 entre `background`/`backgroundAccent` e `text`/`textSoft`.
 - `whatsappNumber`, `addressHtml` e `openingHours`
 - Blocos `navigation`, `hero`, `services`, `plans`, `testimonials`, `gallery`, `faq`, `contact` e `footer` para trocar textos, botões e listas
+  - Adicione, remova ou reordene quantos links quiser ajustando o array `navigation.links`; a mesma lista alimenta os menus desktop, mobile e o rodapé automaticamente.
 - `thankYouPage` → título, texto e botão da página thanks.html (Netlify usa essa tela após cada envio)
 - Para **esconder seções sem editar HTML**, coloque `enabled: false` nos blocos:
   - `hero.promo.enabled`
