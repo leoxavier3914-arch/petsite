@@ -52,15 +52,37 @@ $$('.icon').forEach(el=>{
 })
 
 /* Lead form (demonstrativo) */
-const BUSINESS_WHATSAPP = (window.SITE_CONFIG && window.SITE_CONFIG.whatsappNumber) || '5511999999999' // Trocar pelo número real com DDI/DDD, somente dígitos
+const WHATSAPP_MIN_LENGTH = 10;
+const WHATSAPP_MAX_LENGTH = 15;
+
+const getValidWhatsappNumber = () => {
+  const raw = window.SITE_CONFIG && window.SITE_CONFIG.whatsappNumber;
+  const digits = (raw == null ? '' : String(raw)).replace(/\D+/g, '');
+  if (!digits || digits.length < WHATSAPP_MIN_LENGTH || digits.length > WHATSAPP_MAX_LENGTH){
+    return '';
+  }
+  return digits;
+};
+window.getValidWhatsappNumber = getValidWhatsappNumber;
+
+const ensureWhatsappNumber = () => {
+  const digits = getValidWhatsappNumber();
+  if (!digits){
+    alert('Por favor, informe um número de WhatsApp válido nas configurações (inclua DDI e DDD, apenas dígitos).');
+    return null;
+  }
+  return digits;
+};
 
 $('#leadForm')?.addEventListener('submit', (e)=>{
   e.preventDefault()
+  const businessNumber = ensureWhatsappNumber();
+  if (!businessNumber) return;
   const fd = new FormData(e.currentTarget)
   const nome = fd.get('nome')
   const whats = fd.get('whats')
   const msg = `Olá! Sou ${nome}. Quero aproveitar a promoção de estreia e meu WhatsApp é ${whats}.`
-  const url = `https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`
+  const url = `https://wa.me/${businessNumber}?text=${encodeURIComponent(msg)}`
   window.open(url, '_blank')
 })
 
@@ -89,7 +111,9 @@ if (contactForm){
 • Serviço: ${data.servico}
 • Data/Hora: ${data.data} ${data.hora}
 • Obs: ${data.obs || '—'}`;
-      const url = `https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+      const businessNumber = ensureWhatsappNumber();
+      if (!businessNumber) return;
+      const url = `https://wa.me/${businessNumber}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
     });
   } else if (provider === 'netlify') {

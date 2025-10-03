@@ -30,10 +30,31 @@
     white: '--white'
   };
 
+  const WHATSAPP_MIN_LENGTH = 10;
+  const WHATSAPP_MAX_LENGTH = 15;
   const toDigits = (value) => (value || '').toString().replace(/\D+/g, '');
+  const isValidWhatsappNumber = (digits) => digits.length >= WHATSAPP_MIN_LENGTH && digits.length <= WHATSAPP_MAX_LENGTH;
+  const resolveConfiguredWhatsapp = () => {
+    if (typeof window.getValidWhatsappNumber === 'function'){
+      const fromScript = window.getValidWhatsappNumber();
+      if (fromScript) return fromScript;
+    }
+    const digits = toDigits(C.whatsappNumber);
+    return isValidWhatsappNumber(digits) ? digits : '';
+  };
   const formatWhatsUrl = (value) => {
     const digits = toDigits(value);
-    return digits ? `https://wa.me/${digits}` : '#';
+    return isValidWhatsappNumber(digits) ? `https://wa.me/${digits}` : '';
+  };
+  const disableWhatsappLink = (btn) => {
+    if (!btn || btn.dataset.whatsappDisabled === 'true') return;
+    btn.removeAttribute('href');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.dataset.whatsappDisabled = 'true';
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      alert('Nenhum número de WhatsApp válido foi configurado. Atualize as configurações para utilizar este botão.');
+    });
   };
 
   const setText = (selector, text) => {
@@ -419,15 +440,29 @@
       if (contact.primaryButton.label != null) primaryBtn.textContent = contact.primaryButton.label;
     }
     const secondaryBtn = document.querySelector('#contactForm .actions .btn.ghost');
+    const fallbackDigits = resolveConfiguredWhatsapp();
+    const fallbackUrl = formatWhatsUrl(fallbackDigits);
     if (secondaryBtn && contact.secondaryButton){
       if (contact.secondaryButton.label != null) secondaryBtn.textContent = contact.secondaryButton.label;
       if (contact.secondaryButton.href){
         secondaryBtn.setAttribute('href', contact.secondaryButton.href);
+        secondaryBtn.removeAttribute('aria-disabled');
+        delete secondaryBtn.dataset.whatsappDisabled;
+      } else if (fallbackUrl){
+        secondaryBtn.setAttribute('href', fallbackUrl);
+        secondaryBtn.removeAttribute('aria-disabled');
+        delete secondaryBtn.dataset.whatsappDisabled;
       } else {
-        secondaryBtn.setAttribute('href', formatWhatsUrl(C.whatsappNumber));
+        disableWhatsappLink(secondaryBtn);
       }
     } else if (secondaryBtn){
-      secondaryBtn.setAttribute('href', formatWhatsUrl(C.whatsappNumber));
+      if (fallbackUrl){
+        secondaryBtn.setAttribute('href', fallbackUrl);
+        secondaryBtn.removeAttribute('aria-disabled');
+        delete secondaryBtn.dataset.whatsappDisabled;
+      } else {
+        disableWhatsappLink(secondaryBtn);
+      }
     }
 
     const disclaimer = document.querySelector('#contactForm small');
