@@ -19,6 +19,18 @@ window.SITE_CONFIG = {
     secondary: "Petshop",    // Palavra pequena ao lado do nome
     short: "AuMiau"          // Versão curta (menu mobile, favicon etc.)
   },
+  theme: {
+    background: "#0f1f14",        // Fundo principal (gradiente escuro)
+    backgroundAccent: "#153726",   // Fundo secundário do gradiente
+    primary: "#2aba8a",            // Cor principal (botões, destaques)
+    secondary: "#a5e2c8",          // Variação suave da cor principal
+    text: "#0e1a14",               // Texto sobre fundos claros
+    textSoft: "#22372f",           // Texto secundário/hover
+    card: "#ffffff1a",             // Fundo translúcido dos cards (usar #RRGGBBAA)
+    stroke: "#ffffff2e",           // Bordas translúcidas
+    muted: "#cfe7dc",              // Textos suaves/legendas
+    white: "#ffffff"               // Branco padrão para contrastar com o tema
+  },
   whatsappNumber: "5511999999999", // DDI+DDD+número (somente dígitos)
   addressHtml: "Rua dos Pets, 123 — Centro<br/>Sua Cidade • SP",
   openingHours: [
