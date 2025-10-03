@@ -436,8 +436,15 @@
     }
 
     const primaryBtn = document.querySelector('#contactForm .actions .btn');
-    if (primaryBtn && contact.primaryButton){
-      if (contact.primaryButton.label != null) primaryBtn.textContent = contact.primaryButton.label;
+    const provider = (C.form && typeof C.form.provider === 'string') ? C.form.provider.toLowerCase() : 'whatsapp';
+    if (primaryBtn){
+      if (contact.primaryButton && contact.primaryButton.label != null){
+        primaryBtn.textContent = contact.primaryButton.label;
+      }
+      const currentLabel = (primaryBtn.textContent || '').trim();
+      if (provider !== 'whatsapp' && /whatsapp/i.test(currentLabel)){
+        primaryBtn.textContent = 'Enviar formulário';
+      }
     }
     const secondaryBtn = document.querySelector('#contactForm .actions .btn.ghost');
     const fallbackDigits = resolveConfiguredWhatsapp();

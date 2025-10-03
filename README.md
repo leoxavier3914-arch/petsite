@@ -17,6 +17,7 @@
   - `faq.enabled`
   - `contact.enabled`
 - `form.provider` → `"whatsapp"` (recomendado), `"netlify"`, `"formspree"`, `"emailjs"`
+- Se trocar para um provider que não seja WhatsApp, o botão principal do formulário vira automaticamente "Enviar formulário". Para usar outro texto, sobrescreva `contact.primaryButton.label`.
 - `pixels` (GA4, Facebook, TikTok) e `seo` (título, descrição, favicon emoji, imagem de compartilhamento)
 
 2) **Troque as fotos (opcional)**:
