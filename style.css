@@ -35,6 +35,16 @@ body{
 img{max-width:100%;display:block;border-radius:14px}
 .container{max-width:var(--container);margin:0 auto;padding:0 20px}
 .hidden{position:absolute;left:-9999px}
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  border:0;
+}
 
 /* Header / Nav */
 .site-header{
@@ -204,10 +214,38 @@ img{max-width:100%;display:block;border-radius:14px}
 
 /* Footer */
 .site-footer{border-top:1px solid var(--stroke);padding:26px 0;background:rgba(10,20,15,.6);backdrop-filter:blur(6px)}
-.footer-grid{display:grid;grid-template-columns:1fr auto;align-items:center}
-.footer-links{display:flex;gap:16px}
+.footer-grid{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:18px}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
 .footer-links a{color:var(--white);text-decoration:none;opacity:.9}
+.footer-links a:hover{opacity:1}
+.footer-social{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap}
+.footer-social[hidden]{display:none !important}
+.social-link{
+  width:40px;
+  height:40px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--stroke);
+  color:var(--white);
+  text-decoration:none;
+  box-shadow:var(--shadow);
+}
+.social-link .icon{display:grid;place-items:center}
+.social-link svg{width:18px;height:18px;fill:currentColor}
+.social-link:hover{background:var(--brand);color:#0b1b14}
+.social-link.instagram:hover{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4);color:#fff}
+.social-link.tiktok:hover{background:#000;color:#fff}
+.social-link.is-hidden{display:none}
 .brand.small{font-weight:800}
+
+@media (max-width: 720px){
+  .footer-grid{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .footer-links{justify-content:center}
+  .footer-social{justify-content:center}
+}
 
 /* Efeitos e estados */
 a, button{transition: all .2s ease}

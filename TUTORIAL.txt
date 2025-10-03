@@ -32,7 +32,7 @@ PASSO 1 — EDITAR CONFIG.JS
    - thankYouPage → título, mensagem e botão da página de confirmação (thanks.html)
    - footer → texto legal e links do rodapé
    - **Quer remover uma seção inteira?** Basta colocar `enabled: false` nos blocos `hero.promo`, `services`, `plans`, `testimonials`, `gallery`, `faq` ou `contact` e ela some automaticamente do site.
-4. Redes sociais: preencha social.instagram / social.tiktok se quiser mostrar.
+4. Redes sociais: preencha social.instagram / social.tiktok para mostrar os ícones no rodapé. Se deixar vazio, o respectivo link desaparece automaticamente.
 5. Formulário: form.provider define como você recebe ("whatsapp", "netlify", "formspree" ou "emailjs").
 6. (Opcional) pixels → GA4, Facebook e TikTok (cole seus códigos para medir visitas).
 7. (Opcional) seo → título da aba, descrição e imagem para redes sociais (ogImage 1200×630).
