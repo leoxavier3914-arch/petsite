@@ -17,6 +17,17 @@
     paw: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="20" cy="20" r="8"/><circle cx="44" cy="20" r="8"/><circle cx="24" cy="40" r="8"/><circle cx="40" cy="40" r="8"/><path d="M32 60c12 0 20-10 12-18-4-4-8-4-12-4s-8 0-12 4c-8 8 0 18 12 18z"/></svg>'
   };
 
+  const SOCIAL_PLATFORMS = {
+    instagram: {
+      label: 'Instagram',
+      icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8zm4 3.5A4.5 4.5 0 1 1 7.5 13 4.5 4.5 0 0 1 12 8.5zm0 2A2.5 2.5 0 1 0 14.5 13 2.5 2.5 0 0 0 12 10.5zm5-3.75a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/></svg>'
+    },
+    tiktok: {
+      label: 'TikTok',
+      icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.75 3H18a3.25 3.25 0 0 0 3.25 3.25V9.5a6.5 6.5 0 0 1-3.67-1.1v6.37a6.77 6.77 0 1 1-6.77-6.77h.52v3.34a3.43 3.43 0 1 0 2.48 3.3z"/></svg>'
+    }
+  };
+
   const THEME_VARS = {
     background: '--bg',
     backgroundAccent: '--bg-2',
@@ -499,9 +510,50 @@
   };
 
   const bindSocial = () => {
-    if (C.social){
-      const ig = document.querySelector('a[href*="instagram.com"]'); if (ig && C.social.instagram) ig.href = C.social.instagram;
-      const tt = document.querySelector('a[href*="tiktok.com"]');    if (tt && C.social.tiktok)    tt.href = C.social.tiktok;
+    const container = document.querySelector('[data-social-container]');
+    if (!container) return;
+
+    const socials = C.social || {};
+    let visibleCount = 0;
+
+    Object.entries(SOCIAL_PLATFORMS).forEach(([key, meta]) => {
+      const url = typeof socials[key] === 'string' ? socials[key].trim() : '';
+      let link = container.querySelector(`[data-social-link="${key}"]`);
+
+      if (!link){
+        link = document.createElement('a');
+        link.dataset.socialLink = key;
+        link.className = `social-link ${key}`;
+        link.setAttribute('aria-label', meta.label);
+        link.innerHTML = `<span aria-hidden="true" class="icon">${meta.icon}</span><span class="sr-only">${meta.label}</span>`;
+        link.setAttribute('hidden', '');
+        container.appendChild(link);
+      } else {
+        link.classList.add(key);
+        if (!link.getAttribute('aria-label')){
+          link.setAttribute('aria-label', meta.label);
+        }
+        if (!link.innerHTML.trim()){
+          link.innerHTML = `<span aria-hidden="true" class="icon">${meta.icon}</span><span class="sr-only">${meta.label}</span>`;
+        }
+      }
+
+      if (url){
+        link.href = url;
+        link.removeAttribute('hidden');
+        link.classList.remove('is-hidden');
+        visibleCount++;
+      } else {
+        link.removeAttribute('href');
+        link.setAttribute('hidden', '');
+        link.classList.add('is-hidden');
+      }
+    });
+
+    if (visibleCount){
+      container.removeAttribute('hidden');
+    } else {
+      container.setAttribute('hidden', '');
     }
   };
 
