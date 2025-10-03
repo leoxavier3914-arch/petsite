@@ -63,11 +63,11 @@
           <form id="leadForm" class="mini-form" aria-label="Cadastro rápido">
             <label>
               <span>Seu nome</span>
-              <input type="text" name="nome" placeholder="Ex.: Ana Souza" required>
+              <input type="text" name="nome" placeholder="Ex.: Ana Souza" required autocomplete="name">
             </label>
             <label>
               <span>WhatsApp</span>
-              <input type="tel" name="whats" placeholder="(11) 99999-9999" required>
+              <input type="tel" name="whats" placeholder="(11) 99999-9999" required autocomplete="tel" inputmode="tel" pattern="[0-9]{10,15}">
             </label>
             <button class="btn" type="submit">Quero meu desconto</button>
             <small class="muted">Sem spam. Entraremos em contato por WhatsApp.</small>
@@ -253,17 +253,17 @@
           <div class="grid two">
             <label>
               <span>Seu nome</span>
-              <input type="text" name="nome" required placeholder="Seu nome completo">
+              <input type="text" name="nome" required placeholder="Seu nome completo" autocomplete="name">
             </label>
             <label>
               <span>WhatsApp</span>
-              <input type="tel" name="whats" required placeholder="(11) 99999-9999">
+              <input type="tel" name="whats" required placeholder="(11) 99999-9999" autocomplete="tel" inputmode="tel" pattern="[0-9]{10,15}">
             </label>
           </div>
           <div class="grid two">
             <label>
               <span>Nome do pet</span>
-              <input type="text" name="pet" required placeholder="Ex.: Thor">
+              <input type="text" name="pet" required placeholder="Ex.: Thor" autocomplete="pet-name">
             </label>
             <label>
               <span>Serviço</span>
