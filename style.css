@@ -223,5 +223,5 @@ a, button{transition: all .2s ease}
 
 /* === Logo opcional via assets/images/logo.png === */
 .brand-logo{display:none;height:28px;width:auto;vertical-align:middle}
-.brand.has-logo .brand-logo{display:inline-block}
+.brand.has-logo img.brand-logo{display:inline-block}
 .brand.has-logo .brand-text{display:none}
