@@ -3,6 +3,8 @@
 
 1) **Abra `config.js`** e personalize:
 - `siteName` e o objeto `brand` (nome que aparece no cabeçalho/rodapé)
+- `theme` com as cores base da página (ex.: `background: "#0f1f14"`, `primary: "#2aba8a"`, `secondary: "#a5e2c8"`).
+  - Use hexadecimais (`#RRGGBB` ou `#RRGGBBAA` para transparências) e mantenha contraste mínimo de 4.5:1 entre `background`/`backgroundAccent` e `text`/`textSoft`.
 - `whatsappNumber`, `addressHtml` e `openingHours`
 - Blocos `navigation`, `hero`, `services`, `plans`, `testimonials`, `gallery`, `faq`, `contact` e `footer` para trocar textos, botões e listas
 - Para **esconder seções sem editar HTML**, coloque `enabled: false` nos blocos:

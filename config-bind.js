@@ -17,6 +17,19 @@
     paw: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="20" cy="20" r="8"/><circle cx="44" cy="20" r="8"/><circle cx="24" cy="40" r="8"/><circle cx="40" cy="40" r="8"/><path d="M32 60c12 0 20-10 12-18-4-4-8-4-12-4s-8 0-12 4c-8 8 0 18 12 18z"/></svg>'
   };
 
+  const THEME_VARS = {
+    background: '--bg',
+    backgroundAccent: '--bg-2',
+    primary: '--brand',
+    secondary: '--brand-2',
+    text: '--ink',
+    textSoft: '--ink-2',
+    card: '--card',
+    stroke: '--stroke',
+    muted: '--muted',
+    white: '--white'
+  };
+
   const toDigits = (value) => (value || '').toString().replace(/\D+/g, '');
   const formatWhatsUrl = (value) => {
     const digits = toDigits(value);
@@ -71,6 +84,17 @@
     setText('.brand-text', short);
     setText('.site-footer .brand strong', primary);
     setText('.site-footer .brand .sub', secondary);
+  };
+
+  const bindTheme = () => {
+    const theme = C.theme || {};
+    const root = document.documentElement;
+    Object.entries(THEME_VARS).forEach(([key, cssVar]) => {
+      const value = theme[key];
+      if (value){
+        root.style.setProperty(cssVar, value);
+      }
+    });
   };
 
   const bindNavigation = () => {
@@ -473,6 +497,7 @@
   };
 
   bindSeo();
+  bindTheme();
   bindBrand();
   bindNavigation();
   bindHero();
